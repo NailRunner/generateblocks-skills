@@ -1,5 +1,7 @@
 # GenerateBlocks Skills
 
+[![Buy me a coffee](https://img.shields.io/badge/Buy%20me%20a%20coffee-FFDD00?style=flat&logo=buymeacoffee&logoColor=black)](https://buymeacoffee.com/gauravtiwari)
+
 LLM-optimized skill documentation and development resources for the [GenerateBlocks](https://generateblocks.com/) WordPress plugin.
 
 **Source-verified against GenerateBlocks free 2.4.1 and GB Pro 2.7.1** (August 2026), including a read-only check of the same active versions on WordPress 7.1 at gauravtiwari.org. The styling guidance covers Pro CSS Mode, structured selectors, native/custom at-rules, CSS delivery, and a GenerateBlocks-specific anti-slop gate.
@@ -361,6 +363,16 @@ not belong on a production site.
 ## Other LLMs
 
 For non-Claude assistants (GPT, Gemini, etc.), see **`AGENTS.md`** for universal instructions — or just run `./install.sh` to set up your tool automatically.
+
+## Support This Project
+
+These skills are free and open source but keeping them accurate takes time. When GenerateBlocks ships an update, I go through the plugin source again and check the skills against it, so the markup you generate still passes block validation.
+
+If the skills saved you from rebuilding a layout by hand or from a round of "Attempt Block Recovery," you can buy me a coffee.
+
+<a href="https://buymeacoffee.com/gauravtiwari"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy me a coffee" height="50"></a>
+
+A star on the repo helps too, and so does opening an issue with the snippet whenever a skill gives you markup that breaks in the editor.
 
 ## License
 
