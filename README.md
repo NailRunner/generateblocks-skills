@@ -266,10 +266,54 @@ npm run wp-env:start   # Local WordPress
 
 ## Push generated blocks into a live WordPress site
 
-The skills generate block markup as a string. To get that string into a real
-record — read the current page, splice a section in, write it back — pair this
-repo with an MCP server that exposes a WordPress write surface, or use plain
+The skills generate block markup as a string. There are two ways to get that
+string into a real record: paste it by hand into the block editor's **Code
+editor**, or automate the read-splice-write loop with an MCP server or plain
 REST.
+
+### Paste by hand: use the Code editor, not the visual canvas
+
+For a single section or page, no server is needed.
+
+1. Open the page, post, template, or GP Element in the block editor.
+2. Switch to the Code editor: **Options** (the ⋮ menu, top right) →
+   **Code editor**, or press `Ctrl+Shift+Alt+M` (`⌘⇧⌥M` on Mac).
+3. Put the cursor on an empty line between two top-level blocks: after one
+   block's closing `<!-- /wp:... -->` comment and before the next
+   `<!-- wp:... -->` opener. On an empty page, click into the empty field.
+4. Paste the whole generated snippet, from the first
+   `<!-- wp:generateblocks/... -->` comment through its matching closer.
+   Don't trim or reformat it.
+5. Click **Exit code editor**. WordPress parses the text back into blocks.
+6. Confirm none of the new blocks shows *"This block contains unexpected or
+   invalid content"*, then save.
+
+Why not the visual canvas? Pasting there sends the clipboard through the
+editor's paste handler, which guesses what you meant from the clipboard format
+and the cursor position. Select and copy from a rendered code block (a chat
+window, GitHub, a syntax-highlighted editor) and the clipboard often carries
+formatted HTML with the comment delimiters escaped. The editor then converts it
+as HTML instead of parsing it as blocks, and the markup lands as literal text
+in Paragraph, Preformatted, or Code blocks. Paste with the cursor inside a text
+block and it can land inline or split that block. The Code editor is a plain
+text field: what you paste is exactly what gets parsed.
+
+Two things to watch:
+
+- **Paste as a user with `unfiltered_html`** (Administrators and Editors on a
+  single site, Super Admins only on multisite). WordPress runs content saved by
+  other users through `wp_kses`, which strips inline SVG and other markup the
+  blocks depend on, and GenerateBlocks 2.4+ refuses new dynamic tags from them.
+- **Don't click "Attempt Block Recovery."** It rebuilds the block from whatever
+  the editor could parse and drops the rest. Undo, fix the markup, and paste
+  again. Common causes are catalogued in
+  [`references/recovery-rules.md`](skills/generateblocks-layouts/references/recovery-rules.md).
+
+### Automate it: MCP server or REST
+
+To read the current page, splice a section in, and write it back without
+opening the editor, pair this repo with an MCP server that exposes a WordPress
+write surface, or use plain REST.
 
 Read [`references/mcp-publishing.md`](skills/generateblocks-layouts/references/mcp-publishing.md)
 before the first write. A write that returns `200` can still corrupt the block:
